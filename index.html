@@ -1,11 +1,11 @@
 <html>
 <body>
-<form method="GET" action="http://localhost:81/testl" onsubmit="myHilitor.apply(hilite.value); return false;">
+<form method="GET" action="" onsubmit="myHighlighter.apply(searchstring.value); return false;">
 <fieldset>
 <legend>Search and Highlight Text</legend>
-<label>Keywords</label><span><input type="text" size="32" name="hilite" value="">
+<label>Keywords</label><span><input type="text" size="32" name="searchstring" value="">
 <input type="submit" value="Apply">
-<input type="button" value="Remove" onclick="myHilitor.remove();"></span>
+<input type="button" value="Remove" onclick="myHighlighter.remove();"></span>
 </fieldset>
 </form>
 Bounty task to search and highlight text
@@ -13,7 +13,7 @@ Bounty task to search and highlight text
 <a href="#">Just some text in a dummy link<a/>|<a href="#"> another dummy link<a/>
 </br>
 The brown boys decided not to play the<strong>brown</strong> boys <i>because the</i></br>brown boys seem so brown that the brown <sup>boys</sup> 
-didnt look any more like brown boys  
+didnt look any more like brown boys.  
 <p>
 For example, if I was searching for "string one", it would match:
 <br>
@@ -24,11 +24,9 @@ but not
 string <b>one</b> (I can't get this to show up here, but the "one" is inside a bold tag)
 <script type="text/javascript" src="hilitor.js"></script>
 <script type="text/javascript">
-
-  var myHilitor; // global variable
+  var myHighlighter;
   document.addEventListener("DOMContentLoaded", function(e) {
-    myHilitor = new Hilitor();
-    //myHilitor.apply("brown boys");
+    myHighlighter = new Hilitor();
   }, false);
 </script>
 
