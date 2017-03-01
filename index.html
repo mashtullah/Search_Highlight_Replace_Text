@@ -1,0 +1,56 @@
+<html>
+<body>
+<form method="GET" action="http://localhost:81/testl" onsubmit="myHilitor.apply(hilite.value); return false;">
+<fieldset>
+<legend>Highlight Words</legend>
+<label>Keywords</label><span><input type="text" size="32" name="hilite" value="">
+<input type="submit" value="Apply">
+<input type="button" value="Remove" onclick="myHilitor.remove();"></span>
+</fieldset>
+</form>
+Bounty task to search and highlight text
+<p>
+<a href="#">Just some text in a dummy link<a/>|<a href="#"> another dummy link<a/>
+</br>
+The brown boys decided not to play the<strong>brown</strong> boys <i>because the</i></br>brown boys seem so brown that the brown <sup>boys</sup> 
+didnt look any more like brown boys  
+<p>
+For example, if I was searching for "string one", it would match:
+
+string one
+
+but not
+
+string <b>one</b> (I can't get this to show up here, but the "one" is inside a bold tag)
+<script type="text/javascript" src="hilitor.js"></script>
+<script type="text/javascript">
+
+  var myHilitor; // global variable
+  document.addEventListener("DOMContentLoaded", function(e) {
+    myHilitor = new Hilitor();
+    myHilitor.apply("boys");
+  }, false);
+
+var elems = document.querySelectorAll(".link");
+
+for (var i=elems.length; i--;) {
+    elems[i].addEventListener("click", fn, false);
+}
+
+function fn() {
+    if ( this.name == "link1" ) {
+
+        console.log("This is link1");
+		window.location.href = "http://localhost:81/testl/?hello=world";
+
+    } else if ( this.name == "link2" ) {
+		
+        console.log("This is link2");
+		window.location.href = "http://localhost:81/testl/page1.html?hello=world";
+
+    }
+}
+</script>
+
+</body>
+</html>
