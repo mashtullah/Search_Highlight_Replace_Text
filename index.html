@@ -2,7 +2,7 @@
 <body>
 <form method="GET" action="http://localhost:81/testl" onsubmit="myHilitor.apply(hilite.value); return false;">
 <fieldset>
-<legend>Highlight Words</legend>
+<legend>Search and Highlight Text</legend>
 <label>Keywords</label><span><input type="text" size="32" name="hilite" value="">
 <input type="submit" value="Apply">
 <input type="button" value="Remove" onclick="myHilitor.remove();"></span>
@@ -16,11 +16,11 @@ The brown boys decided not to play the<strong>brown</strong> boys <i>because the
 didnt look any more like brown boys  
 <p>
 For example, if I was searching for "string one", it would match:
-
+<br>
 string one
-
+<br>
 but not
-
+<br>
 string <b>one</b> (I can't get this to show up here, but the "one" is inside a bold tag)
 <script type="text/javascript" src="hilitor.js"></script>
 <script type="text/javascript">
