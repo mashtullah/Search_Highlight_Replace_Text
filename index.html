@@ -28,28 +28,8 @@ string <b>one</b> (I can't get this to show up here, but the "one" is inside a b
   var myHilitor; // global variable
   document.addEventListener("DOMContentLoaded", function(e) {
     myHilitor = new Hilitor();
-    myHilitor.apply("boys");
+    //myHilitor.apply("brown boys");
   }, false);
-
-var elems = document.querySelectorAll(".link");
-
-for (var i=elems.length; i--;) {
-    elems[i].addEventListener("click", fn, false);
-}
-
-function fn() {
-    if ( this.name == "link1" ) {
-
-        console.log("This is link1");
-		window.location.href = "http://localhost:81/testl/?hello=world";
-
-    } else if ( this.name == "link2" ) {
-		
-        console.log("This is link2");
-		window.location.href = "http://localhost:81/testl/page1.html?hello=world";
-
-    }
-}
 </script>
 
 </body>
