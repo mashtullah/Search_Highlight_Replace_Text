@@ -1,4 +1,5 @@
 // Original JavaScript code by Chirp Internet: www.chirp.com.au
+//Modified by Musuda Alitsi dmusuda@gmail.com
 // Please acknowledge use of this code by including this header.
 
 function Hilitor(id, tag)
@@ -97,6 +98,35 @@ function Hilitor(id, tag)
     };
   };
 
+  // recursively  replace words
+  this.replaceWords = function(node,rp)
+  {
+    if(node === undefined || !node) return;
+    if(!matchRegex) return;
+    if(skipTags.test(node.nodeName)) return;
+
+    if(node.hasChildNodes()) {
+      for(var i=0; i < node.childNodes.length; i++)
+        this.replaceWords(node.childNodes[i],rp);
+    }
+    if(node.nodeType == 3) { 
+      if((nv = node.nodeValue) && (regs = matchRegex.exec(nv))) {
+		  
+        if(!wordColor[regs[0].toLowerCase()]) {
+          wordColor[regs[0].toLowerCase()] = colors[colorIdx++ % colors.length];
+        }
+
+        var match = document.createElement(hiliteTag);
+        match.appendChild(document.createTextNode(rp));
+        match.style.fontStyle = "inherit";
+        var after = node.splitText(regs.index);
+        after.nodeValue = after.nodeValue.substring(regs[0].length);
+        node.parentNode.insertBefore(match, after);
+      }
+    };
+  };
+  
+  
   // remove highlighting
   this.remove = function()
   {
@@ -108,7 +138,7 @@ function Hilitor(id, tag)
     }
   };
 
-  // start highlighting at target node
+  // start highlighting at target nodes
   this.apply = function(input)
   {
     this.remove();
@@ -117,5 +147,17 @@ function Hilitor(id, tag)
       this.hiliteWords(targetNode);
     }
   };
+  
+  // start replacing text at target nodes
+  this.replace = function(input,rp)
+  {
+    this.remove();
+    if(input === undefined || !input) return;
+    if(this.setRegex(input)) {
+      this.replaceWords(targetNode,rp);
+    }
+  };
+  
+  
 
 }

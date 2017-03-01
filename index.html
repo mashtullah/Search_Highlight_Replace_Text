@@ -2,10 +2,11 @@
 <body>
 <form method="GET" action="" onsubmit="myHighlighter.apply(searchstring.value); return false;">
 <fieldset>
-<legend>Search and Highlight Text</legend>
+<legend>Search,Highlight and Replace Text</legend>
 <label>Keywords</label><span><input type="text" size="32" name="searchstring" value="">
-<input type="submit" value="Apply">
-<input type="button" value="Remove" onclick="myHighlighter.remove();"></span>
+<input type="submit" value="Highlight Text">
+<input type="button" value="Replace Text" onclick="myHighlighter.replace(searchstring.value,'REPLACE_STRING_HERE');"></span>
+<input type="button" value="Remove Highlight" onclick="myHighlighter.remove();"></span>
 </fieldset>
 </form>
 Bounty task to search and highlight text
