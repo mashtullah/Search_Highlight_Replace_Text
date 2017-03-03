@@ -1,8 +1,19 @@
-// Original JavaScript code by Chirp Internet: www.chirp.com.au
-//Modified by Musuda Alitsi dmusuda@gmail.com
-// Please acknowledge use of this code by including this header.
+/* Original JavaScript code by Chirp Internet: www.chirp.com.au
+ Modified by Musuda Alitsi dmusuda@gmail.com on 02-March-2017
+ 
+ Please acknowledge use of this code by including this header.
+ SHRT - Search_Highlight_Replace_Text
+ parameters 
+		id = the id of the tag you want searched
+		tag= the tag you want used for highlighting
+		
+ URL  - https://github.com/mashtullah/Search_Highlight_Replace_Text
+ Demo - https://mashtullah.github.io/Search_Highlight_Replace_Text/
+ 
+ 
+ */
 
-function Hilitor(id, tag)
+function SHRT(id, tag)
 {
 
   var targetNode = document.getElementById(id) || document.body;
@@ -19,6 +30,7 @@ function Hilitor(id, tag)
   var replacedNodes=[];
   var regIndex=[];
   var regIndex_=[];
+  var replaceString="";
   
   var replacedWords_=[];
   var replacedNodes_=[];
@@ -221,6 +233,7 @@ function Hilitor(id, tag)
     this.remove();
     if(input === undefined || !input) return;
     if(this.setRegex(input)) {
+		replaceString=rp;
       this.replaceWords(targetNode,rp);
     }
 	if(c>0){
@@ -230,7 +243,7 @@ function Hilitor(id, tag)
 				}
 	for(var i=0; i <replacedNodes_.length; i++)
 	{
-		this.setRegex("REPLACE_STRING_HERE");
+		this.setRegex(replaceString);
 		var match = document.createElement(hiliteTag);
 		match.appendChild(document.createTextNode(replacedWords_[i]));
 		match.style.fontStyle = "inherit";
