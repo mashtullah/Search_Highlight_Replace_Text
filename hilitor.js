@@ -14,7 +14,16 @@ function Hilitor(id, tag)
   var matchRegex = "";
   var openLeft = false;
   var openRight = false;
-
+  var words=[];
+  var replacedWords=[];
+  var replacedNodes=[];
+  var regIndex=[];
+  var regIndex_=[];
+  
+  var replacedWords_=[];
+  var replacedNodes_=[];
+  var c=0;
+  var currentWordReplaced=false;
   // characters to strip from start and end of the input string
   var endCharRegex = new RegExp("^[^\\\w]+|[^\\\w]+$", "g");
 
@@ -55,6 +64,7 @@ function Hilitor(id, tag)
       if(!this.openLeft) re = "\\b" + re;
       if(!this.openRight) re = re + "\\b";
       matchRegex = new RegExp(re, "i");
+	  words=input.split('|');
       return true;
     }
     return false;
@@ -83,13 +93,12 @@ function Hilitor(id, tag)
       if((nv = node.nodeValue) && (regs = matchRegex.exec(nv))) {
         if(!wordColor[regs[0].toLowerCase()]) {
           wordColor[regs[0].toLowerCase()] = colors[colorIdx++ % colors.length];
-        }
-
+        }		
         var match = document.createElement(hiliteTag);
-        match.appendChild(document.createTextNode(regs[0]));
-        match.style.backgroundColor = wordColor[regs[0].toLowerCase()];
-        match.style.fontStyle = "inherit";
-        match.style.color = "#000";
+        match.appendChild(document.createTextNode(regs[0]));		
+		match.style.backgroundColor = wordColor[regs[0].toLowerCase()];
+		match.style.fontStyle = "inherit";
+		match.style.color = "#000";      
 
         var after = node.splitText(regs.index);
         after.nodeValue = after.nodeValue.substring(regs[0].length);
@@ -99,7 +108,7 @@ function Hilitor(id, tag)
   };
 
   // recursively  replace words
-  this.replaceWords = function(node,rp)
+  this.replaceWords = function(node,rp,ind_=0)
   {
     if(node === undefined || !node) return;
     if(!matchRegex) return;
@@ -115,13 +124,71 @@ function Hilitor(id, tag)
         if(!wordColor[regs[0].toLowerCase()]) {
           wordColor[regs[0].toLowerCase()] = colors[colorIdx++ % colors.length];
         }
-
-        var match = document.createElement(hiliteTag);
-        match.appendChild(document.createTextNode(rp));
-        match.style.fontStyle = "inherit";
-        var after = node.splitText(regs.index);
-        after.nodeValue = after.nodeValue.substring(regs[0].length);
-        node.parentNode.insertBefore(match, after);
+		var rp_="";
+		if(regs[0]==words[c])
+		{
+			if(c<words.length)
+			{
+				if(!currentWordReplaced){
+					rp_=rp;
+					currentWordReplaced=true;
+				} 
+				var match = document.createElement(hiliteTag);
+				match.appendChild(document.createTextNode(rp_));
+				match.style.fontStyle = "inherit";
+				
+				if(ind_==0)
+					var after = node.splitText(regs.index);	
+				else
+					var after = node.splitText(ind_);						
+				after.nodeValue = after.nodeValue.substring(regs[0].length);			
+				node.parentNode.insertBefore(match, after);
+				replacedWords.push(regs[0]);
+				replacedNodes.push(node);
+				regIndex.push(regs.index);
+				
+			}
+			c++;
+			if(c==words.length)
+			{
+				replacedWords=[];
+				replacedNodes=[];
+				regIndex=[];
+				c=0;
+				currentWordReplaced=false;
+			}
+		}
+		else{			
+				if(c>0){
+					replacedWords_.push(replacedWords.join(" "));	
+					replacedNodes_.push(replacedNodes[0]);
+					regIndex_.push(regIndex[0]);				
+					replacedWords=[];
+					replacedNodes=[];
+					regIndex=[];
+					c=0;
+				}
+				rp_=rp;
+				currentWordReplaced=false;
+				var match = document.createElement(hiliteTag);
+				match.appendChild(document.createTextNode(rp_));
+				match.style.fontStyle = "inherit";
+				var after = node.splitText(regs.index);
+				after.nodeValue = after.nodeValue.substring(regs[0].length);
+				node.parentNode.insertBefore(match, after);
+				replacedWords.push(regs[0]);
+				replacedNodes.push(node);	
+				regIndex.push(regs.index);
+				currentWordReplaced=true;
+				if(regs[0]!=words[0]){
+				replacedWords_.push(replacedWords.join(" "));	
+				replacedNodes_.push(replacedNodes[0]);
+				regIndex_.push(regIndex[0]);					
+				}
+				c++;			
+			
+		}
+					    
       }
     };
   };
@@ -156,6 +223,22 @@ function Hilitor(id, tag)
     if(this.setRegex(input)) {
       this.replaceWords(targetNode,rp);
     }
+	if(c>0){
+			replacedWords_.push(replacedWords.join(" "));	
+			replacedNodes_.push(replacedNodes[0]);
+			regIndex_.push(regIndex[0]);					
+				}
+	for(var i=0; i <replacedNodes_.length; i++)
+	{
+		this.setRegex("REPLACE_STRING_HERE");
+		var match = document.createElement(hiliteTag);
+		match.appendChild(document.createTextNode(replacedWords_[i]));
+		match.style.fontStyle = "inherit";
+		var after = replacedNodes_[i].splitText(regIndex_[i]);
+		after.nodeValue = after.nodeValue.substring(replacedWords_[i].length);
+		replacedNodes_[i].parentNode.insertBefore(match, after);
+		after.nextSibling.remove();
+	}
   };
   
   

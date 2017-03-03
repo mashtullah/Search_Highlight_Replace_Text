@@ -9,26 +9,33 @@
 <input type="button" value="Remove Highlight" onclick="myHighlighter.remove();"></span>
 </fieldset>
 </form>
-Bounty task to search and highlight text
-<p>
+Bounty task to search and highlight text cc
+<p>side <b>walk</b><br>"walk"<br>side<b>walk</b>side walk<br> side walk
 <a href="#">Just some text in a dummy link<a/>|<a href="#"> another dummy link<a/>
 </br>
-The brown boys decided not to play the<strong>brown</strong> boys <i>because the</i></br>brown boys seem so brown that the brown <sup>boys</sup> 
+The brown boys aa bb cc decided not to play the<strong>brown</strong> boys <i>because the</i></br>brown boys seem so brown that the brown <sup>boys</sup> 
 didnt look any more like brown boys.  
 <p>
-For example, if I was searching for "string one", it would match:
+For example, if I was searching for "string one", it would match:  bb 
 <br>
-string one
+string one 
 <br>
-but not
+but not aa bb cc
 <br>
 string <b>one</b> (I can't get this to show up here, but the "one" is inside a bold tag)
+string <b>one</b>aa bb cc 
+string <b>one</b> 
+string <b>one</b> 
+string <b>one</b> aa
 <script type="text/javascript" src="hilitor.js"></script>
 <script type="text/javascript">
   var myHighlighter;
   document.addEventListener("DOMContentLoaded", function(e) {
     myHighlighter = new Hilitor();
   }, false);
+ var s = document.body.innerHTML;
+s = s.replace(/<[^<>]+>/g,'');
+console.log(s);
 </script>
 
 </body>
